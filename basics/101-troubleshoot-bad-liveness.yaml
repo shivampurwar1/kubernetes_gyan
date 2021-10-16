@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: default
+  name: demo-bad-liveness-probe
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-bad-liveness-probe
+  template:
+    metadata:
+      labels:
+        app: demo-bad-liveness-probe
+    spec:
+      containers:
+      - image: nginx:1.18
+        name: nginx
+        ports:
+        - containerPort: 80
+        livenessProbe:
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 1
+          failureThreshold: 2
+          httpGet:
+            path: /
+            port: 8080

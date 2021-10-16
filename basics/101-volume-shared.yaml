@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: default
+  name: demo-shared-vol
+spec:
+      containers:
+      - name: demo-shared-vol-1
+        image: busybox
+        command:
+         - bin/sh
+         - -c
+         - "sleep 5000"
+        volumeMounts:
+          - mountPath: "/tmp/shared-dir"
+            name: shared-vol
+      - name: demo-shared-vol-2
+        image: busybox
+        command:
+         - bin/sh
+         - -c
+         - "sleep 5000"
+        volumeMounts:
+          - mountPath: "/tmp/shared-data"
+            name: shared-vol
+      volumes:
+        - name: shared-vol
+          emptyDir: {}

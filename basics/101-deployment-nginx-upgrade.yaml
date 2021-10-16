@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: default
+  name: demo-nginx-deployment-upgrade
+  labels:
+    app: demo-nginx-upgrade
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: demo-nginx-upgrade
+  minReadySeconds: 5
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: demo-nginx-upgrade
+    spec:
+      containers:
+      - image: nginx:1.18    # nginx:1.19
+        name: nginx-upgrade
+        ports:
+          - containerPort: 80

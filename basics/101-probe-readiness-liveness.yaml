@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: default
+  name: demo-probe-health-check
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-probe-health-check
+  template:
+    metadata:
+      labels:
+        app: demo-probe-health-check
+    spec:
+      containers:
+      - image: nginx:1.18
+        name: nginx
+        ports:
+        - containerPort: 80
+        readinessProbe:
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+          httpGet:
+            path: /
+            port: 80
+        livenessProbe:
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+          httpGet:
+            path: /
+            port: 80

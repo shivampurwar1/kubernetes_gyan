@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: demo-pod-on-specific-node
+  namespace: default
+spec:
+  containers:
+  - name: demo-daemon-dev
+    image: nginx
+  nodeSelector:      # Attach label to node first to make this work
+    env: "dev"

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-lb-svc
+  labels:
+    app: demo-lb
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: 80
+#      nodePort: 30000
+  selector:
+    app: demo-nginx

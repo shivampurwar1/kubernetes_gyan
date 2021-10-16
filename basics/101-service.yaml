@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-internal-svc
+  labels:
+    app: demo-svc
+spec:
+  ports:
+    - port: 8082
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: demo-nginx

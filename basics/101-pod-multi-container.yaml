@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: default
+  name: demo-multi-container
+spec:
+  containers:
+  - image: nginx:1.18
+    name: nginx
+  - name: sidecar
+    image: curlimages/curl
+    command: ["/bin/sh"]
+    args: ["-c", "echo Hello from the sidecar container; sleep 300"]

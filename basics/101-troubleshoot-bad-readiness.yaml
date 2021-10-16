@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: default
+  name: demo-bad-readiness-probe
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-bad-readiness-probe
+  template:
+    metadata:
+      labels:
+        app: demo-bad-readiness-probe
+    spec:
+      containers:
+      - image: nginx:1.18
+        name: nginx
+        ports:
+        - containerPort: 80
+        readinessProbe:
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+          httpGet:
+            path: /
+            port: 8080

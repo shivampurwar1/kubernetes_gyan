@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: demo-daemonset
+  namespace: default
+  labels:
+    app: demo-daemon
+spec:
+  selector:
+    matchLabels:
+      name: demo-daemon
+  template:
+    metadata:
+      labels:
+        name: demo-daemon
+    spec:
+      containers:
+      - name: demo-daemon
+        image: busybox
+        args:
+        - /bin/sh
+        - -c
+        - date; sleep 500
+        resources:
+          limits:
+            memory: 200Mi
+          requests:
+            cpu: 100m
+            memory: 200Mi
+      terminationGracePeriodSeconds: 30

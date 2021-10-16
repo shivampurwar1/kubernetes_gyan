@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: demo-env-usage
+spec:
+  containers:
+  - name: demo-env
+    image: nginx
+    env:
+      - name: ENV_VAR1
+        value: 'value1'
+      - name: ENV_VAR2
+        value: 'value2'

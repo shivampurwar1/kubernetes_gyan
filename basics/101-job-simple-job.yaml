@@ -1,0 +1,18 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  namespace: default
+  name: demo-job
+spec:
+  template:
+    metadata:
+      name: demo-job
+    spec:
+      containers:
+      - name: demo-job
+        image: busybox
+        command:
+         - bin/sh
+         - -c
+         - "for i in 1 2 3 ; do echo $i ; done"
+      restartPolicy: Never

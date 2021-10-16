@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: default
+  name: demo-init-container
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-init
+  template:
+    metadata:
+      labels:
+        app: demo-init
+    spec:
+      initContainers:
+        - name: demo-init-1
+          image: busybox
+          command:
+           - bin/sh
+           - -c
+           - "echo service_was_present > /init_data/file"
+          volumeMounts:
+             - mountPath: "/init_data"
+               name: shared-init-vol
+      containers:
+        - name: demo-main-1
+          image: busybox
+          command:
+           - bin/sh
+           - -c
+           - "while true; do cat /init_data/file; sleep 10; done"
+          volumeMounts:
+             - mountPath: "/init_data"
+               name: shared-init-vol
+      volumes:
+        - name: shared-init-vol
+          emptyDir: {}
